@@ -43,22 +43,27 @@ public class Util {
         return instance;
     }
 
-    //подключение через Hibernate
+    //подключение через Hibernate без xml
     public static SessionFactory getSessionFactory() {
-        if (sessionFactory == null) {
-            StandardServiceRegistryBuilder registryBuilder =
-                    new StandardServiceRegistryBuilder();
-            Map<String, String> settings = new HashMap<>();
-            settings.put(Environment.URL, URL);
-            settings.put(Environment.USER, USERNAME);
-            settings.put(Environment.PASS, PASSWORD);
-            settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-            settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
-            registryBuilder.applySettings(settings);
-            registry = registryBuilder.build();
-            MetadataSources metadataSources = new MetadataSources(registry)
-                    .addAnnotatedClass(User.class);
-            sessionFactory = metadataSources.buildMetadata().buildSessionFactory();
+        try {
+            if (sessionFactory == null) {
+                StandardServiceRegistryBuilder registryBuilder =
+                        new StandardServiceRegistryBuilder();
+                Map<String, String> settings = new HashMap<>();
+                settings.put(Environment.URL, URL);
+                settings.put(Environment.USER, USERNAME);
+                settings.put(Environment.PASS, PASSWORD);
+                settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
+                settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
+                registryBuilder.applySettings(settings);
+                registry = registryBuilder.build();
+                MetadataSources metadataSources = new MetadataSources(registry)
+                        .addAnnotatedClass(User.class);
+                sessionFactory = metadataSources.buildMetadata().buildSessionFactory();
+            }
+        } catch (Exception e) {
+            System.err.println("Не удалось установить подключение");
+            e.printStackTrace();
         }
         return sessionFactory;
     }
