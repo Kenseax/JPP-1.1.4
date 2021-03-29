@@ -19,7 +19,6 @@ public class Util {
     private static final String URL = "jdbc:mysql://localhost:3306/user_data";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
-    private static StandardServiceRegistry registry;
     private static SessionFactory sessionFactory;
 
     private Util() {
@@ -56,13 +55,12 @@ public class Util {
                 settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
                 settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
                 registryBuilder.applySettings(settings);
-                registry = registryBuilder.build();
+                StandardServiceRegistry registry = registryBuilder.build();
                 MetadataSources metadataSources = new MetadataSources(registry)
                         .addAnnotatedClass(User.class);
                 sessionFactory = metadataSources.buildMetadata().buildSessionFactory();
             }
         } catch (Exception e) {
-            System.err.println("Не удалось установить подключение с БД");
             e.printStackTrace();
         }
         return sessionFactory;
