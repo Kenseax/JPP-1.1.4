@@ -3,12 +3,13 @@ package jm.task.core.jdbc.dao;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
-    Transaction transaction;
+    private Transaction transaction;
 
     public UserDaoHibernateImpl() {
 
@@ -26,6 +27,7 @@ public class UserDaoHibernateImpl implements UserDao {
             session.createSQLQuery(sql).executeUpdate();
             transaction.commit();
         } catch (Exception e) {
+            System.err.println("При создании таблицы пользователей произошло исключение");
             transaction.rollback();
         }
     }
@@ -38,6 +40,7 @@ public class UserDaoHibernateImpl implements UserDao {
             session.createSQLQuery(sql).executeUpdate();
             transaction.commit();
         } catch (Exception e) {
+            System.err.println("При удалении таблицы произошло исключение");
             transaction.rollback();
         }
     }
@@ -49,9 +52,9 @@ public class UserDaoHibernateImpl implements UserDao {
             session.save(new User(name, lastName, age));
             transaction.commit();
         } catch (Exception e) {
+            System.err.println("Во время сохранения пользователя произошло исключение");
             transaction.rollback();
         }
-        System.out.println("Пользователь с именем " + name + " добавлен в БД");
     }
 
     @Override
@@ -61,6 +64,7 @@ public class UserDaoHibernateImpl implements UserDao {
             session.delete(session.get(User.class, id));
             transaction.commit();
         } catch (Exception e) {
+            System.err.println("При удаления пользователя по id произошло исключение");
             transaction.rollback();
         }
     }
@@ -79,6 +83,7 @@ public class UserDaoHibernateImpl implements UserDao {
             session.createQuery("DELETE FROM User").executeUpdate();
             transaction.commit();
         } catch (Exception e) {
+            System.err.println("При попытке достать всех пользователей из базы данных произошло исключение");
             transaction.rollback();
         }
     }

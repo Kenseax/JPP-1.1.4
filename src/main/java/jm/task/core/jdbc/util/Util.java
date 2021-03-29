@@ -62,7 +62,7 @@ public class Util {
                 sessionFactory = metadataSources.buildMetadata().buildSessionFactory();
             }
         } catch (Exception e) {
-            System.err.println("Не удалось установить подключение");
+            System.err.println("Не удалось установить подключение с БД");
             e.printStackTrace();
         }
         return sessionFactory;

@@ -1,19 +1,19 @@
 package jm.task.core.jdbc;
 
 
-import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
+import jm.task.core.jdbc.service.UserServiceImpl;
 
 public class Main {
 
     public static void main(String[] args) {
-        UserDaoHibernateImpl userDaoHibernate = new UserDaoHibernateImpl();
-        userDaoHibernate.createUsersTable();
-        userDaoHibernate.saveUser("Николай", "Задорожнов", (byte) 25);
-        userDaoHibernate.saveUser("Игорь", "Круглов", (byte) 12);
-        userDaoHibernate.saveUser("Анастасия", "Конева", (byte) 56);
-        userDaoHibernate.saveUser("Артур", "Смекалов", (byte) 32);
-        userDaoHibernate.getAllUsers();
-        userDaoHibernate.cleanUsersTable();
-        userDaoHibernate.dropUsersTable();
+        UserServiceImpl userService = new UserServiceImpl();
+        userService.createUsersTable();
+        userService.saveUser("Николай", "Задорожнов", (byte) 25);
+        userService.saveUser("Игорь", "Круглов", (byte) 12);
+        userService.saveUser("Анастасия", "Конева", (byte) 56);
+        userService.saveUser("Артур", "Смекалов", (byte) 32);
+        userService.getAllUsers();
+        userService.cleanUsersTable();
+        userService.dropUsersTable();
     }
 }
